@@ -76,12 +76,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             lastRegion = region
             hasAnnouncedBorder = false
         } else {
-            if (!hasAnnouncedBorder && previousRegion != null && lastLocation != null) {
-                val distance = currentLocation.distanceTo(lastLocation)
-                if (distance > 2000) {
-                    val message = "Вы приближаетесь к границе $previousRegion и $lastRegion"
-                    textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
-                    hasAnnouncedBorder = true
+            if (!hasAnnouncedBorder && previousRegion != null) {
+                val lastLoc = lastLocation
+                if (lastLoc != null) {
+                    val distance = currentLocation.distanceTo(lastLoc)
+                    if (distance > 2000) {
+                        val message = "Вы приближаетесь к границе $previousRegion и $lastRegion"
+                        textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
+                        hasAnnouncedBorder = true
+                    }
                 }
             }
         }
